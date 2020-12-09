@@ -1,0 +1,84 @@
+PayeeDetailImpl
+
+
+package com.entity.layer3;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Repository;
+
+
+import com.entity.layer2.Payeedetail;
+@Repository
+public class PayeeDetailImpl implements PayeeDetailRepository{
+	
+		@PersistenceContext
+		EntityManager entityManager;
+		
+		
+		@Transactional
+		public List<Payeedetail> getAll() {
+			
+			String s="from Payeedetail";
+			Query query = entityManager.createQuery(s);
+			List<Payeedetail> payeedetails =query.getResultList();
+			return payeedetails;
+}
+		
+}
+
+
+PayeeDetailRepository
+package com.entity.layer3;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.entity.layer2.Payeedetail;
+
+public interface PayeeDetailRepository {
+	
+	
+	public List<Payeedetail> getAll();
+	
+	//7 methods declared
+
+}
+PayeedetailsTestCase
+package com.entity;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.entity.layer2.Payeedetail;
+import com.entity.layer3.PayeeDetailRepository;
+
+@SpringBootTest
+public class PayeedetailsTestCase {
+	
+	@Autowired
+	PayeeDetailRepository   a;
+	
+	@Test
+	void contextLoads() {
+		List<Payeedetail> get=a.getAll();
+		for(Payeedetail pd:get)
+		{ 
+			System.out.println(pd.getPayeename());
+			System.out.println(pd.getId());
+		
+		}
+		
+	
+	}
+}
+	
